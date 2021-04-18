@@ -1,7 +1,11 @@
+import 'dart:developer';
+
+import 'package:books_app/data/api/api.dart';
 import 'package:flutter/material.dart';
 
 import 'navigation/navigation.dart';
 import 'ui/common/constants.dart';
+import 'package:dio/dio.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
@@ -12,6 +16,14 @@ void main() {
 class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    final dio = Dio();
+    dio.options.headers = BooksApi.headers;
+    final client = BooksApi(dio);
+
+    client.getAllVolumes(BooksApi.apiKey).then((it) {
+      log(it.toString());
+    });
+
     return MaterialApp(
       title: 'Books',
       theme: UIConstants.materialTheme,
