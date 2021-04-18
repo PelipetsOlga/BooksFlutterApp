@@ -1,3 +1,4 @@
+import 'package:books_app/domain/models/epub.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'epub.g.dart';
@@ -9,8 +10,9 @@ class Epub {
 
   Epub({required this.isAvailable, required this.downloadLink});
 
-  factory Epub.fromJson(Map<String, dynamic> json) =>
-      _$EpubFromJson(json);
+  factory Epub.fromJson(Map<String, dynamic> json) => _$EpubFromJson(json);
 
   Map<String, dynamic> toJson() => _$EpubToJson(this);
+
+  EpubModel toDomain() => EpubModel(isAvailable, downloadLink);
 }

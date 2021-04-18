@@ -1,3 +1,4 @@
+import 'package:books_app/domain/models/access_info.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'epub.dart';
@@ -19,18 +20,30 @@ class AccessInfo {
 
   AccessInfo(
       {required this.country,
-        required this.viewability,
-        required this.embeddable,
-        required this.publicDomain,
-        required this.textToSpeechPermission,
-        required this.epub,
-        required this.pdf,
-        required this.webReaderLink,
-        required this.accessViewStatus,
-        required this.quoteSharingAllowed});
+      required this.viewability,
+      required this.embeddable,
+      required this.publicDomain,
+      required this.textToSpeechPermission,
+      required this.epub,
+      required this.pdf,
+      required this.webReaderLink,
+      required this.accessViewStatus,
+      required this.quoteSharingAllowed});
 
   factory AccessInfo.fromJson(Map<String, dynamic> json) =>
       _$AccessInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$AccessInfoToJson(this);
+
+  AccessInfoModel toDomain() => AccessInfoModel(
+      country,
+      viewability,
+      embeddable,
+      publicDomain,
+      textToSpeechPermission,
+      epub.toDomain(),
+      pdf.toDomain(),
+      webReaderLink,
+      accessViewStatus,
+      quoteSharingAllowed);
 }

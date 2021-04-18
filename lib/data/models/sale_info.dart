@@ -1,3 +1,4 @@
+import 'package:books_app/domain/models/sale_info.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'sale_info.g.dart';
@@ -19,4 +20,7 @@ class SaleInfo {
       _$SaleInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$SaleInfoToJson(this);
+
+  SaleInfoModel toDomain() =>
+      SaleInfoModel(country, saleability, isEbook, buyLink);
 }

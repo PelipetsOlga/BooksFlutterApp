@@ -1,3 +1,4 @@
+import 'package:books_app/domain/models/search_info.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'search_info.g.dart';
@@ -12,4 +13,6 @@ class SearchInfo {
       _$SearchInfoFromJson(json);
 
   Map<String, dynamic> toJson() => _$SearchInfoToJson(this);
+
+  SearchInfoModel toDomain() => SearchInfoModel(textSnippet);
 }

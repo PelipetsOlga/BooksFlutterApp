@@ -1,3 +1,4 @@
+import 'package:books_app/domain/models/penelisation_summary.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'penelisation_summary.g.dart';
@@ -14,4 +15,7 @@ class PanelizationSummary {
       _$PanelizationSummaryFromJson(json);
 
   Map<String, dynamic> toJson() => _$PanelizationSummaryToJson(this);
+
+  PanelizationSummaryModel toDomain() =>
+      PanelizationSummaryModel(containsEpubBubbles, containsImageBubbles);
 }

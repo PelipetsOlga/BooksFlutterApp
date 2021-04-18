@@ -1,3 +1,4 @@
+import 'package:books_app/domain/models/reading_models.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'reading_models.g.dart';
@@ -13,4 +14,6 @@ class ReadingModes {
       _$ReadingModesFromJson(json);
 
   Map<String, dynamic> toJson() => _$ReadingModesToJson(this);
+
+  ReadingModesModel toDomain() => ReadingModesModel(text, image);
 }

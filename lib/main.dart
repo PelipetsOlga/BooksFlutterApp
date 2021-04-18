@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:books_app/data/api/api.dart';
 import 'package:flutter/material.dart';
 
+import 'data/repo/repository.dart';
 import 'navigation/navigation.dart';
 import 'ui/common/constants.dart';
 import 'package:dio/dio.dart';
@@ -18,9 +19,11 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final dio = Dio();
     dio.options.headers = BooksApi.headers;
-    final client = BooksApi(dio);
+    final api = BooksApi(dio);
 
-    client.getAllVolumes(BooksApi.apiKey).then((it) {
+    final repository = BooksRepositoryImpl(api);
+
+    repository.getAllBooks().then((it) {
       log(it.toString());
     });
 

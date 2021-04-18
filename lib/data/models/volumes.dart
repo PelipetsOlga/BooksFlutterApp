@@ -1,3 +1,4 @@
+import 'package:books_app/domain/models/volumes.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'items.dart';
@@ -16,4 +17,7 @@ class Volumes {
       _$VolumesFromJson(json);
 
   Map<String, dynamic> toJson() => _$VolumesToJson(this);
+
+  VolumesModel toDomain() =>
+      VolumesModel(kind, totalItems, items.map((e) => e.toDomain()).toList());
 }

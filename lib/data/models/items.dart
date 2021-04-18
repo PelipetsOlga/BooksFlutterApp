@@ -1,3 +1,4 @@
+import 'package:books_app/domain/models/items.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 import 'access_info.dart';
@@ -20,16 +21,25 @@ class Items {
 
   Items(
       {required this.kind,
-        required this.id,
-        required this.etag,
-        required this.selfLink,
-        required this.volumeInfo,
-        required this.saleInfo,
-        required this.accessInfo,
-        required this.searchInfo});
+      required this.id,
+      required this.etag,
+      required this.selfLink,
+      required this.volumeInfo,
+      required this.saleInfo,
+      required this.accessInfo,
+      required this.searchInfo});
 
-  factory Items.fromJson(Map<String, dynamic> json) =>
-      _$ItemsFromJson(json);
+  factory Items.fromJson(Map<String, dynamic> json) => _$ItemsFromJson(json);
 
   Map<String, dynamic> toJson() => _$ItemsToJson(this);
+
+  ItemsModel toDomain() => ItemsModel(
+      kind,
+      id,
+      etag,
+      selfLink,
+      volumeInfo.toDomain(),
+      saleInfo.toDomain(),
+      accessInfo.toDomain(),
+      searchInfo?.toDomain());
 }
