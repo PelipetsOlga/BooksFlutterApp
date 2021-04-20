@@ -30,10 +30,13 @@ dependencies:
   cupertino_icons: ^1.0.2
   retrofit: ^2.0.0-beta1
   json_annotation: ^4.0.1
+  injectable: ^1.2.2
+  get_it: ^6.1.1
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  injectable_generator:
   build_runner:
   retrofit_generator: ^2.0.0-beta1
   json_serializable: ^4.0.2
