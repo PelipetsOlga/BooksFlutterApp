@@ -9,17 +9,6 @@ class UIConstants {
     primarySwatch: AppColors.createMaterialColor(AppColors.appbarBackground),
     visualDensity: VisualDensity.adaptivePlatformDensity,
     scaffoldBackgroundColor: AppColors.scaffold_background,
-    appBarTheme: AppBarTheme(
-      brightness: Brightness.dark,
-      color: AppColors.appbarBackground,
-      textTheme: ThemeData.dark().textTheme.copyWith(
-            title: const TextStyle(
-              fontSize: 20,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
-            ),
-          ),
-    ),
     dividerTheme: const DividerThemeData(color: AppColors.gray3, thickness: 1),
   );
 }

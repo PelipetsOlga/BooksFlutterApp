@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 class AppColors{
+  static const pageBackground = Colors.white;
   static const white = Colors.white;
   static const lighter_gray = Color(0xffF2F2F2);
   static const light_gray = Color(0xff828282);

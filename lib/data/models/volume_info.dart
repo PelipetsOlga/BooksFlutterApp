@@ -28,7 +28,7 @@ class VolumeInfo {
   String infoLink;
   String canonicalVolumeLink;
   String? subtitle;
-  int? averageRating;
+  double? averageRating;
   int? ratingsCount;
 
   VolumeInfo(

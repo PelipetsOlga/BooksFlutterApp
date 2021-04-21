@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:books_app/data/api/api.dart';
 import 'package:books_app/domain/models/volumes.dart';
 import 'package:books_app/domain/repository/repository.dart';
@@ -15,8 +17,11 @@ class BooksRepositoryImpl implements BooksRepository {
   }
 
   @override
-  Future<VolumesModel> getAllBooks() async {
-    final apiResult = await api.getAllVolumes(BooksApi.apiKey);
+  Future<VolumesModel> getAllBooks(
+      {int startIndex = 0, int maxResults = 20}) async {
+    final apiResult = await api.getAllVolumes(BooksApi.apiKey,
+        startIndex: startIndex, maxResults: maxResults);
+    log("repo  apiResult size = ${apiResult.items.length}");
     return apiResult.toDomain();
   }
 }
