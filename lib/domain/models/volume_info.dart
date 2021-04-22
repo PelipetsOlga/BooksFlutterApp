@@ -7,7 +7,7 @@ class VolumeInfoModel {
   String title;
   List<String>? authors;
   String? publishedDate;
-  List<IndustryIdentifiersModel> industryIdentifiers;
+  List<IndustryIdentifiersModel>? industryIdentifiers;
   ReadingModesModel readingModes;
   int? pageCount;
   String printType;

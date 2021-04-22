@@ -37,12 +37,12 @@ class HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(title: Text("Books")),
-      body: Container(
-        color: AppColors.pageBackground,
-        child: ChangeNotifierProvider<HomeViewModel>(
-          create: (context) => HomeViewModel(repository),
+    return ChangeNotifierProvider<HomeViewModel>(
+      create: (context) => HomeViewModel(repository),
+      child: Scaffold(
+        appBar: AppBar(title: Text("Books")),
+        body: Container(
+          color: AppColors.pageBackground,
           child: ValueListenableBuilder<List<ItemsModel>>(
             valueListenable: viewModel,
             builder:

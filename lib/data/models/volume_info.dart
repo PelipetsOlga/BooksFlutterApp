@@ -13,7 +13,7 @@ class VolumeInfo {
   String title;
   List<String>? authors;
   String? publishedDate;
-  List<IndustryIdentifiers> industryIdentifiers;
+  List<IndustryIdentifiers>? industryIdentifiers;
   ReadingModes readingModes;
   int? pageCount;
   String printType;
@@ -62,7 +62,7 @@ class VolumeInfo {
       title,
       authors,
       publishedDate,
-      industryIdentifiers.map((e) => e.toDomain()).toList(),
+      industryIdentifiers?.map((e) => e.toDomain())?.toList(),
       readingModes.toDomain(),
       pageCount,
       printType,

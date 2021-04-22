@@ -12,15 +12,15 @@ class BooksRepositoryImpl implements BooksRepository {
 
   BooksRepositoryImpl() {
     final dio = Dio();
-    dio.options.headers = BooksApi.headers;
+    dio.options.headers = headers;
     this.api = BooksApi(dio);
   }
 
   @override
   Future<VolumesModel> getAllBooks(
       {int startIndex = 0, int maxResults = 20}) async {
-    final apiResult = await api.getAllVolumes(BooksApi.apiKey,
-        startIndex: startIndex, maxResults: maxResults);
+    final apiResult =
+        await api.getAllVolumes(startIndex: startIndex, maxResults: maxResults);
     log("repo  apiResult size = ${apiResult.items.length}");
     return apiResult.toDomain();
   }
