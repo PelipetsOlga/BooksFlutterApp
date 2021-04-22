@@ -2,22 +2,10 @@
 import 'package:flutter/material.dart';
 
 import 'injection.dart';
-import 'navigation/navigation.dart';
-import 'ui/common/constants.dart';
+import 'navigation/app.dart';
 
 void main() {
   WidgetsFlutterBinding.ensureInitialized();
   configureDependencies();
-  runApp(MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Books',
-      theme: UIConstants.materialTheme,
-      routes: AppNavigation.getNavigationRoutes(),
-    );
-  }
+  runApp(BooksApp());
 }
