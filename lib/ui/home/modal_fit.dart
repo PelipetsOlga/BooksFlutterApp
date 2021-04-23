@@ -28,37 +28,10 @@ class ModalFitState extends State<ModalFit> {
       child: Column(
         mainAxisSize: MainAxisSize.min,
         children: <Widget>[
-          Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
-            Padding(
-              padding: const EdgeInsets.all(4.0),
-              child: Text("Sorted by",
-                  style: TextStyle(fontWeight: FontWeight.bold)),
-            ),
-            SizedBox(width: 16),
-            ChoiceChip(
-              label: Text("Relevance"),
-              selected: _viewModel.getSortedType() == SortedByType.relevance,
-              onSelected: (bool selected) {
-                if (selected) {
-                  setState(() {
-                    _viewModel.setSortedByRelevance();
-                  });
-                }
-              },
-            ),
-            SizedBox(width: 8),
-            ChoiceChip(
-              label: Text("Newest"),
-              selected: _viewModel.getSortedType() == SortedByType.newest,
-              onSelected: (bool selected) {
-                if (selected) {
-                  setState(() {
-                    _viewModel.setSortedByNewest();
-                  });
-                }
-              },
-            )
-          ]),
+          SizedBox(height: 16),
+          getSortedBySection(),
+          SizedBox(height: 8),
+          getFilterByPrintTypeSection(),
           ListTile(
             title: Text('Edit'),
             leading: Icon(Icons.edit),
@@ -87,5 +60,83 @@ class ModalFitState extends State<ModalFit> {
         ],
       ),
     ));
+  }
+
+  Wrap getSortedBySection() {
+    return Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
+      Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Text("Sorted by", style: TextStyle(fontWeight: FontWeight.bold)),
+      ),
+      SizedBox(width: 16),
+      ChoiceChip(
+        label: Text("Relevance"),
+        selected: _viewModel.getSortedType() == SortedByType.relevance,
+        onSelected: (bool selected) {
+          if (selected) {
+            setState(() {
+              _viewModel.setSortedByRelevance();
+            });
+          }
+        },
+      ),
+      SizedBox(width: 8),
+      ChoiceChip(
+        label: Text("Newest"),
+        selected: _viewModel.getSortedType() == SortedByType.newest,
+        onSelected: (bool selected) {
+          if (selected) {
+            setState(() {
+              _viewModel.setSortedByNewest();
+            });
+          }
+        },
+      )
+    ]);
+  }
+
+  Wrap getFilterByPrintTypeSection() {
+    return Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
+      Padding(
+        padding: const EdgeInsets.all(4.0),
+        child: Text("Filter", style: TextStyle(fontWeight: FontWeight.bold)),
+      ),
+      SizedBox(width: 16),
+      ChoiceChip(
+        label: Text("All"),
+        selected: _viewModel.getFilterByPrintType() == FilterByPrintType.all,
+        onSelected: (bool selected) {
+          if (selected) {
+            setState(() {
+              _viewModel.setFilterByPrintTypeAll();
+            });
+          }
+        },
+      ),
+      SizedBox(width: 8),
+      ChoiceChip(
+        label: Text("Books"),
+        selected: _viewModel.getFilterByPrintType() == FilterByPrintType.books,
+        onSelected: (bool selected) {
+          if (selected) {
+            setState(() {
+              _viewModel.setFilterByPrintTypeBooks();
+            });
+          }
+        },
+      ),
+      SizedBox(width: 8),
+      ChoiceChip(
+        label: Text("Magazines"),
+        selected: _viewModel.getFilterByPrintType() == FilterByPrintType.magazines,
+        onSelected: (bool selected) {
+          if (selected) {
+            setState(() {
+              _viewModel.setFilterByPrintTypeMagazines();
+            });
+          }
+        },
+      )
+    ]);
   }
 }

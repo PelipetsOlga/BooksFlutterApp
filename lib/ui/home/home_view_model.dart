@@ -12,6 +12,7 @@ class HomeViewModel extends ValueNotifier<List<ItemsModel>> {
   bool _loading = false;
   final List<ItemsModel> _items = [];
   SortedByType _sortedByType = SortedByType.relevance;
+  FilterByPrintType _filterByPrintType = FilterByPrintType.all;
 
   HomeViewModel(this.repository) : super([]);
 
@@ -51,7 +52,8 @@ class HomeViewModel extends ValueNotifier<List<ItemsModel>> {
       final result = await repository.getAllBooks(
           startIndex: pageNumber * _batchesOf,
           maxResults: _batchesOf,
-          sortedByType: _sortedByType);
+          sortedByType: _sortedByType,
+          printType: _filterByPrintType);
       _setIsLoading(false);
       pageNumber++;
       addItems(result.items);
@@ -67,6 +69,23 @@ class HomeViewModel extends ValueNotifier<List<ItemsModel>> {
 
   void setSortedByRelevance() {
     _sortedByType = SortedByType.relevance;
+    reload();
+  }
+
+  FilterByPrintType getFilterByPrintType() => _filterByPrintType;
+
+  void setFilterByPrintTypeAll() {
+    _filterByPrintType = FilterByPrintType.all;
+    reload();
+  }
+
+  void setFilterByPrintTypeBooks() {
+    _filterByPrintType = FilterByPrintType.books;
+    reload();
+  }
+
+  void setFilterByPrintTypeMagazines() {
+    _filterByPrintType = FilterByPrintType.magazines;
     reload();
   }
 }
