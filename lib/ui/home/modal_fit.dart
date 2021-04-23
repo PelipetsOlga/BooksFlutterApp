@@ -31,10 +31,8 @@ class ModalFitState extends State<ModalFit> {
           Wrap(crossAxisAlignment: WrapCrossAlignment.center, children: [
             Padding(
               padding: const EdgeInsets.all(4.0),
-              child: Text(
-                "Sorted by",
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
+              child: Text("Sorted by",
+                  style: TextStyle(fontWeight: FontWeight.bold)),
             ),
             SizedBox(width: 16),
             ChoiceChip(
