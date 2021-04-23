@@ -11,6 +11,7 @@ class HomeViewModel extends ValueNotifier<List<ItemsModel>> {
   int _batchesOf = 20;
   bool _loading = false;
   final List<ItemsModel> _items = [];
+  SortedByType _sortedByType = SortedByType.relevance;
 
   HomeViewModel(this.repository) : super([]);
 
@@ -19,7 +20,9 @@ class HomeViewModel extends ValueNotifier<List<ItemsModel>> {
 
   void addItems(List<ItemsModel> list) {
     log("addItems to model");
-    list.forEach((element) {log("${element.volumeInfo.title}) ");});
+    list.forEach((element) {
+      log("${element.volumeInfo.title}) ");
+    });
     _items.addAll(list);
     notifyListeners();
   }
@@ -46,10 +49,24 @@ class HomeViewModel extends ValueNotifier<List<ItemsModel>> {
     if (_hasMore && !_loading) {
       _setIsLoading(true);
       final result = await repository.getAllBooks(
-          startIndex: pageNumber * _batchesOf, maxResults: _batchesOf);
+          startIndex: pageNumber * _batchesOf,
+          maxResults: _batchesOf,
+          sortedByType: _sortedByType);
       _setIsLoading(false);
       pageNumber++;
       addItems(result.items);
     }
+  }
+
+  SortedByType getSortedType() => _sortedByType;
+
+  void setSortedByNewest() {
+    _sortedByType = SortedByType.newest;
+    reload();
+  }
+
+  void setSortedByRelevance() {
+    _sortedByType = SortedByType.relevance;
+    reload();
   }
 }

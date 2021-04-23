@@ -18,9 +18,14 @@ class BooksRepositoryImpl implements BooksRepository {
 
   @override
   Future<VolumesModel> getAllBooks(
-      {int startIndex = 0, int maxResults = 20}) async {
-    final apiResult =
-        await api.getAllVolumes(startIndex: startIndex, maxResults: maxResults);
+      {int startIndex = 0,
+      int maxResults = 20,
+      SortedByType sortedByType = SortedByType.relevance}) async {
+    final apiResult = await api.getAllVolumes(
+        startIndex: startIndex,
+        maxResults: maxResults,
+        orderedByParam:
+            sortedByType == SortedByType.relevance ? relevance : newest);
     log("repo  apiResult size = ${apiResult.items.length}");
     return apiResult.toDomain();
   }

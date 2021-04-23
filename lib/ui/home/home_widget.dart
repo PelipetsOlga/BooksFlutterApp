@@ -4,9 +4,11 @@ import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:books_app/ui/common/colors.dart';
 import 'package:books_app/ui/home/home_view_model.dart';
+import 'package:books_app/ui/home/modal_fit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../injection.dart';
 
@@ -38,9 +40,25 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeViewModel>(
-      create: (context) => HomeViewModel(repository),
+      create: (context) => viewModel,
       child: Scaffold(
-        appBar: AppBar(title: Text("Books")),
+        appBar: AppBar(
+          title: Text("Books"),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () => showMaterialModalBottomSheet(
+                    expand: false,
+                    context: context,
+                    elevation: 16,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) => ModalFit(viewModel),
+                  ),
+                  child: Icon(Icons.more_vert),
+                )),
+          ],
+        ),
         body: Container(
           color: AppColors.pageBackground,
           child: ValueListenableBuilder<List<ItemsModel>>(

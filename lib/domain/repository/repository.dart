@@ -1,5 +1,8 @@
 import 'package:books_app/domain/models/volumes.dart';
 
 abstract class BooksRepository {
-  Future<VolumesModel> getAllBooks({int startIndex, int maxResults});
+  Future<VolumesModel> getAllBooks(
+      {int startIndex, int maxResults, SortedByType sortedByType});
 }
+
+enum SortedByType { relevance, newest }
