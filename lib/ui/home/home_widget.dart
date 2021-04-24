@@ -4,7 +4,7 @@ import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:books_app/ui/common/colors.dart';
 import 'package:books_app/ui/home/home_view_model.dart';
-import 'package:books_app/ui/home/modal_fit.dart';
+import 'package:books_app/ui/common/filter/modal_fit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';

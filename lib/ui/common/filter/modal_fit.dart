@@ -1,5 +1,5 @@
 import 'package:books_app/domain/repository/repository.dart';
-import 'package:books_app/ui/common/filter_view_model.dart';
+import 'package:books_app/ui/common/filter/filter_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ModalFit extends StatefulWidget {
