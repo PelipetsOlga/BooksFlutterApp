@@ -1,9 +1,9 @@
 import 'package:books_app/domain/repository/repository.dart';
-import 'package:books_app/ui/home/home_view_model.dart';
+import 'package:books_app/ui/common/filter_view_model.dart';
 import 'package:flutter/material.dart';
 
 class ModalFit extends StatefulWidget {
-  HomeViewModel viewModel;
+  FilterViewModel viewModel;
 
   ModalFit(this.viewModel);
 
@@ -12,7 +12,7 @@ class ModalFit extends StatefulWidget {
 }
 
 class ModalFitState extends State<ModalFit> {
-  late HomeViewModel _viewModel;
+  late FilterViewModel _viewModel;
 
   @override
   void initState() {
@@ -32,31 +32,6 @@ class ModalFitState extends State<ModalFit> {
           getSortedBySection(),
           SizedBox(height: 8),
           getFilterByPrintTypeSection(),
-          ListTile(
-            title: Text('Edit'),
-            leading: Icon(Icons.edit),
-            onTap: () => Navigator.of(context).pop(),
-          ),
-          ListTile(
-            title: Text('Copy'),
-            leading: Icon(Icons.content_copy),
-            onTap: () => Navigator.of(context).pop(),
-          ),
-          ListTile(
-            title: Text('Cut'),
-            leading: Icon(Icons.content_cut),
-            onTap: () => Navigator.of(context).pop(),
-          ),
-          ListTile(
-            title: Text('Move'),
-            leading: Icon(Icons.folder_open),
-            onTap: () => Navigator.of(context).pop(),
-          ),
-          ListTile(
-            title: Text('Delete'),
-            leading: Icon(Icons.delete),
-            onTap: () => Navigator.of(context).pop(),
-          )
         ],
       ),
     ));
@@ -128,7 +103,8 @@ class ModalFitState extends State<ModalFit> {
       SizedBox(width: 8),
       ChoiceChip(
         label: Text("Magazines"),
-        selected: _viewModel.getFilterByPrintType() == FilterByPrintType.magazines,
+        selected:
+            _viewModel.getFilterByPrintType() == FilterByPrintType.magazines,
         onSelected: (bool selected) {
           if (selected) {
             setState(() {

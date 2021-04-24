@@ -3,7 +3,6 @@ import 'dart:developer';
 import 'package:books_app/data/api/api.dart';
 import 'package:books_app/domain/models/volumes.dart';
 import 'package:books_app/domain/repository/repository.dart';
-import 'package:books_app/domain/repository/repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dio/dio.dart';
 
@@ -36,7 +35,6 @@ class BooksRepositoryImpl implements BooksRepository {
             ? sort_by_relevance
             : sort_by_newest,
         printType: printTypeValue);
-    log("repo  apiResult size = ${apiResult.items.length}");
     return apiResult.toDomain();
   }
 }

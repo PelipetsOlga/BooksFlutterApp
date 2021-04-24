@@ -24,7 +24,6 @@ class HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    log("Init state");
     repository = getIt.get();
     viewModel = HomeViewModel(repository);
     viewModel.getMore();
@@ -53,7 +52,7 @@ class HomeScreenState extends State<HomeScreen> {
                     context: context,
                     elevation: 16,
                     backgroundColor: Colors.transparent,
-                    builder: (context) => ModalFit(viewModel),
+                    builder: (context) => ModalFit(viewModel.filterViewModel),
                   ),
                   child: Icon(Icons.more_vert),
                 )),
@@ -65,7 +64,6 @@ class HomeScreenState extends State<HomeScreen> {
             valueListenable: viewModel,
             builder:
                 (BuildContext context, List<ItemsModel> items, Widget? child) {
-              log("onBuild of ValueListenableBuilder");
               if (viewModel.isLoading() && items.isEmpty)
                 return Center(child: CircularProgressIndicator());
               else if (items.isEmpty)
