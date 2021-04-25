@@ -10,7 +10,7 @@ class VolumeInfoModel {
   List<IndustryIdentifiersModel>? industryIdentifiers;
   ReadingModesModel readingModes;
   int? pageCount;
-  String printType;
+  String? printType;
   List<String>? categories;
   String maturityRating;
   bool allowAnonLogging;

@@ -12,6 +12,7 @@ class BooksApp extends StatelessWidget {
     return MaterialApp(
       title: 'Books',
       theme: UIConstants.materialTheme,
+      debugShowCheckedModeBanner: false,
       home: App(),
     );
   }

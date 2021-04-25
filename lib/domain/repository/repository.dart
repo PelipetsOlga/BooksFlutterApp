@@ -6,8 +6,16 @@ abstract class BooksRepository {
       int maxResults,
       SortedByType sortedByType,
       FilterByPrintType printType});
+
+  Future<VolumesModel> search(String keyWord, SearchIn whereSearch,
+      {int startIndex,
+      int maxResults,
+      SortedByType sortedByType,
+      FilterByPrintType printType});
 }
 
 enum SortedByType { relevance, newest }
 
 enum FilterByPrintType { all, books, magazines }
+
+enum SearchIn { title, author }

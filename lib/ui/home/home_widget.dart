@@ -3,11 +3,11 @@ import 'dart:developer';
 import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:books_app/ui/common/colors.dart';
+import 'package:books_app/ui/common/listtile/listtile.dart';
 import 'package:books_app/ui/home/home_view_model.dart';
 import 'package:books_app/ui/common/filter/modal_fit.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
 
 import '../../injection.dart';
@@ -26,7 +26,7 @@ class HomeScreenState extends State<HomeScreen> {
     super.initState();
     repository = getIt.get();
     viewModel = HomeViewModel(repository);
-    viewModel.getMore();
+    viewModel.reload();
   }
 
   @override
@@ -40,137 +40,68 @@ class HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return ChangeNotifierProvider<HomeViewModel>(
       create: (context) => viewModel,
-      child: Scaffold(
-        appBar: AppBar(
-          title: Text("Books"),
-          actions: <Widget>[
-            Padding(
-                padding: EdgeInsets.only(right: 20.0),
-                child: GestureDetector(
-                  onTap: () => showMaterialModalBottomSheet(
-                    expand: false,
-                    context: context,
-                    elevation: 16,
-                    backgroundColor: Colors.transparent,
-                    builder: (context) => ModalFit(viewModel.filterViewModel),
-                  ),
-                  child: Icon(Icons.more_vert),
-                )),
-          ],
-        ),
-        body: Container(
-          color: AppColors.pageBackground,
-          child: ValueListenableBuilder<List<ItemsModel>>(
-            valueListenable: viewModel,
-            builder:
-                (BuildContext context, List<ItemsModel> items, Widget? child) {
-              if (viewModel.isLoading() && items.isEmpty)
-                return Center(child: CircularProgressIndicator());
-              else if (items.isEmpty)
-                return Text('No data');
-              else
-                return NotificationListener<ScrollNotification>(
-                  onNotification: (ScrollNotification scrollInfo) {
-                    if (scrollInfo is ScrollEndNotification &&
-                        scrollInfo.metrics.extentAfter == 0) {
-                      viewModel.getMore();
-                      return true;
-                    }
-                    return false;
-                  },
-                  child: ListView.separated(
-                    physics: const AlwaysScrollableScrollPhysics(),
-                    itemCount: items.length,
-                    itemBuilder: (context, index) {
-                      return _buildListTile(items[index]);
-                    },
-                    separatorBuilder: (context, index) => Divider(height: 2),
-                    cacheExtent: 5,
-                  ),
-                );
-            },
+      child: SafeArea(
+        child: Scaffold(
+          appBar: AppBar(
+            title: Text("Books"),
+            actions: <Widget>[
+              Padding(
+                  padding: EdgeInsets.only(right: 20.0),
+                  child: GestureDetector(
+                    onTap: () => showMaterialModalBottomSheet(
+                      expand: false,
+                      context: context,
+                      elevation: 16,
+                      backgroundColor: Colors.transparent,
+                      builder: (context) => ModalFit(viewModel.filterViewModel),
+                    ),
+                    child: Icon(Icons.more_vert),
+                  )),
+            ],
+          ),
+          body: Container(
+            color: AppColors.pageBackground,
+            child: ValueListenableBuilder<List<ItemsModel>>(
+              valueListenable: viewModel,
+              builder:
+                  (BuildContext context, List<ItemsModel> items, Widget? child) {
+                if (viewModel.isLoading() && items.isEmpty)
+                  return _buildLoadingView();
+                else if (items.isEmpty)
+                  return _buildEmptyView();
+                else
+                  return _buildListView(items);
+              },
+            ),
           ),
         ),
       ),
     );
   }
 
-  Widget _buildListTile(ItemsModel item) {
-    final thumbnailUrl = item.volumeInfo.imageLinks?.thumbnail;
-    return Padding(
-        padding: EdgeInsets.all(16),
-        child: Row(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Container(
-                decoration: BoxDecoration(border: Border.all(width: 0.5)),
-                child: thumbnailUrl != null
-                    ? FadeInImage.assetNetwork(
-                        placeholder: 'assets/icons/book_placeholder.png',
-                        // Before image load
-                        image: thumbnailUrl,
-                        // After image load
-                        height: 150,
-                        width: 150,
-                        fit: BoxFit.fitHeight,
-                      )
-                    : Image.asset(
-                        'assets/icons/book_placeholder.png', // After image load
-                        height: 150,
-                        width: 150,
-                      )),
-            SizedBox(width: 24),
-            Flexible(
-              child: Padding(
-                padding: const EdgeInsets.symmetric(vertical: 8.0),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(_getAuthors(item),
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline6
-                            ?.copyWith(color: AppColors.gray3)),
-                    SizedBox(height: 16),
-                    Text(item.volumeInfo.title,
-                        style: Theme.of(context)
-                            .textTheme
-                            .headline5
-                            ?.copyWith(fontWeight: FontWeight.bold)),
-                    ..._getRating(item)
-                  ],
+  Center _buildLoadingView() => Center(child: CircularProgressIndicator());
+
+  Text _buildEmptyView() => Text('No data');
+
+  NotificationListener<ScrollNotification> _buildListView(List<ItemsModel> items) {
+    return NotificationListener<ScrollNotification>(
+                onNotification: (ScrollNotification scrollInfo) {
+                  if (scrollInfo is ScrollEndNotification &&
+                      scrollInfo.metrics.extentAfter == 0) {
+                    viewModel.getMore();
+                    return true;
+                  }
+                  return false;
+                },
+                child: ListView.separated(
+                  physics: const AlwaysScrollableScrollPhysics(),
+                  itemCount: items.length,
+                  itemBuilder: (context, index) {
+                    return buildListTile(items[index], context);
+                  },
+                  separatorBuilder: (context, index) => Divider(height: 2),
+                  cacheExtent: 5,
                 ),
-              ),
-            ),
-          ],
-        ));
-  }
-
-  String _getAuthors(ItemsModel item) {
-    final authors = item.volumeInfo.authors;
-    if (authors == null || authors.isEmpty) return "";
-    return authors.join(", ");
-  }
-
-  List<Widget> _getRating(ItemsModel item) {
-    final rating = item.volumeInfo.averageRating;
-    if (rating == null)
-      return [];
-    else
-      return [
-        SizedBox(height: 8),
-        RatingBarIndicator(
-          rating: rating,
-          itemBuilder: (context, index) => Icon(
-            Icons.star,
-            color: Colors.amber,
-          ),
-          itemCount: 5,
-          itemSize: 20.0,
-          direction: Axis.horizontal,
-        )
-      ];
+              );
   }
 }

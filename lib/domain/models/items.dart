@@ -8,7 +8,7 @@ class ItemsModel {
   String id;
   String etag;
   String selfLink;
-  VolumeInfoModel volumeInfo;
+  VolumeInfoModel? volumeInfo;
   SaleInfoModel saleInfo;
   AccessInfoModel accessInfo;
   SearchInfoModel? searchInfo;

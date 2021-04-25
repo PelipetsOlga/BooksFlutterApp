@@ -45,7 +45,6 @@ class HomeViewModel extends ValueNotifier<List<ItemsModel>>
     getMore();
   }
 
-  @override
   Future<void> getMore() async {
     if (_hasMore && !_loading) {
       _setIsLoading(true);

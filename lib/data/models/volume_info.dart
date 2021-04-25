@@ -16,7 +16,7 @@ class VolumeInfo {
   List<IndustryIdentifiers>? industryIdentifiers;
   ReadingModes readingModes;
   int? pageCount;
-  String printType;
+  String? printType;
   List<String>? categories;
   String maturityRating;
   bool allowAnonLogging;
@@ -62,7 +62,7 @@ class VolumeInfo {
       title,
       authors,
       publishedDate,
-      industryIdentifiers?.map((e) => e.toDomain())?.toList(),
+      industryIdentifiers?.map((e) => e.toDomain()).toList(),
       readingModes.toDomain(),
       pageCount,
       printType,

@@ -14,7 +14,7 @@ class Items {
   String id;
   String etag;
   String selfLink;
-  VolumeInfo volumeInfo;
+  VolumeInfo? volumeInfo;
   SaleInfo saleInfo;
   AccessInfo accessInfo;
   SearchInfo? searchInfo;
@@ -38,7 +38,7 @@ class Items {
       id,
       etag,
       selfLink,
-      volumeInfo.toDomain(),
+      volumeInfo?.toDomain(),
       saleInfo.toDomain(),
       accessInfo.toDomain(),
       searchInfo?.toDomain());

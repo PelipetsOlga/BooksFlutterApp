@@ -1,4 +1,5 @@
 import 'package:books_app/ui/home/home_widget.dart';
+import 'package:books_app/ui/search/search_widget.dart';
 import 'package:flutter/material.dart';
 
 class RouterSearch {
@@ -10,7 +11,7 @@ class RouterSearch {
 
     switch (settings.name) {
       case search_initialRoute:
-        return MaterialPageRoute(builder: (_) => HomeScreen());
+        return MaterialPageRoute(builder: (_) => SearchScreen());
       default:
         return _errorRoute();
     }
