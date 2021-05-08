@@ -12,7 +12,9 @@ part 'volume_info.g.dart';
 class VolumeInfo {
   String title;
   List<String>? authors;
+  String? publisher;
   String? publishedDate;
+  String? description;
   List<IndustryIdentifiers>? industryIdentifiers;
   ReadingModes readingModes;
   int? pageCount;
@@ -34,7 +36,9 @@ class VolumeInfo {
   VolumeInfo(
       {required this.title,
       required this.authors,
+      required this.publisher,
       required this.publishedDate,
+      required this.description,
       required this.industryIdentifiers,
       required this.readingModes,
       required this.pageCount,
@@ -61,7 +65,9 @@ class VolumeInfo {
   VolumeInfoModel toDomain() => VolumeInfoModel(
       title,
       authors,
+      publisher,
       publishedDate,
+      description,
       industryIdentifiers?.map((e) => e.toDomain()).toList(),
       readingModes.toDomain(),
       pageCount,

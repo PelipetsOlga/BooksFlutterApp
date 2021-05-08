@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/domain/repository/repository.dart';
+import 'package:books_app/navigation/first/router_home.dart';
+import 'package:books_app/ui/book/book_page.dart';
 import 'package:books_app/ui/common/colors.dart';
 import 'package:books_app/ui/common/listtile/listtile.dart';
 import 'package:books_app/ui/home/home_view_model.dart';
@@ -63,8 +65,8 @@ class HomeScreenState extends State<HomeScreen> {
             color: AppColors.pageBackground,
             child: ValueListenableBuilder<List<ItemsModel>>(
               valueListenable: viewModel,
-              builder:
-                  (BuildContext context, List<ItemsModel> items, Widget? child) {
+              builder: (BuildContext context, List<ItemsModel> items,
+                  Widget? child) {
                 if (viewModel.isLoading() && items.isEmpty)
                   return _buildLoadingView();
                 else if (items.isEmpty)
@@ -83,25 +85,33 @@ class HomeScreenState extends State<HomeScreen> {
 
   Text _buildEmptyView() => Text('No data');
 
-  NotificationListener<ScrollNotification> _buildListView(List<ItemsModel> items) {
+  NotificationListener<ScrollNotification> _buildListView(
+      List<ItemsModel> items) {
     return NotificationListener<ScrollNotification>(
-                onNotification: (ScrollNotification scrollInfo) {
-                  if (scrollInfo is ScrollEndNotification &&
-                      scrollInfo.metrics.extentAfter == 0) {
-                    viewModel.getMore();
-                    return true;
-                  }
-                  return false;
-                },
-                child: ListView.separated(
-                  physics: const AlwaysScrollableScrollPhysics(),
-                  itemCount: items.length,
-                  itemBuilder: (context, index) {
-                    return buildListTile(items[index], context);
-                  },
-                  separatorBuilder: (context, index) => Divider(height: 2),
-                  cacheExtent: 5,
-                ),
-              );
+      onNotification: (ScrollNotification scrollInfo) {
+        if (scrollInfo is ScrollEndNotification &&
+            scrollInfo.metrics.extentAfter == 0) {
+          viewModel.getMore();
+          return true;
+        }
+        return false;
+      },
+      child: ListView.separated(
+        physics: const AlwaysScrollableScrollPhysics(),
+        itemCount: items.length,
+        itemBuilder: (context, index) {
+          var item = items[index];
+          return buildListTile(item, context, () => onItemClick(item));
+        },
+        separatorBuilder: (context, index) => Divider(height: 2),
+        cacheExtent: 5,
+      ),
+    );
+  }
+
+  void onItemClick(ItemsModel item) {
+    FocusScope.of(context).focusedChild?.unfocus();
+    Navigator.of(context)
+        .pushNamed(RouterHome.home_book, arguments: BookPageArgs(item));
   }
 }

@@ -2,6 +2,8 @@ import 'dart:developer';
 
 import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/domain/repository/repository.dart';
+import 'package:books_app/navigation/second/router_search.dart';
+import 'package:books_app/ui/book/book_page.dart';
 import 'package:books_app/ui/common/colors.dart';
 import 'package:books_app/ui/common/filter/modal_fit.dart';
 import 'package:books_app/ui/common/listtile/listtile.dart';
@@ -189,7 +191,8 @@ class SearchScreenState extends State<SearchScreen>
         physics: const AlwaysScrollableScrollPhysics(),
         itemCount: items.length,
         itemBuilder: (context, index) {
-          return buildListTile(items[index], context);
+          var item = items[index];
+          return buildListTile(item, context, () => onItemClick(item));
         },
         separatorBuilder: (context, index) => Divider(height: 2),
         cacheExtent: 5,
@@ -212,11 +215,18 @@ class SearchScreenState extends State<SearchScreen>
         physics: const AlwaysScrollableScrollPhysics(),
         itemCount: items.length,
         itemBuilder: (context, index) {
-          return buildListTile(items[index], context);
+          var item = items[index];
+          return buildListTile(item, context, () => onItemClick(item));
         },
         separatorBuilder: (context, index) => Divider(height: 2),
         cacheExtent: 5,
       ),
     );
+  }
+
+  void onItemClick(ItemsModel item) {
+    FocusScope.of(context).focusedChild?.unfocus();
+    Navigator.of(context)
+        .pushNamed(RouterSearch.search_book, arguments: BookPageArgs(item));
   }
 }

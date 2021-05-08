@@ -6,7 +6,9 @@ import 'package:books_app/domain/models/reading_models.dart';
 class VolumeInfoModel {
   String title;
   List<String>? authors;
+  String? publisher;
   String? publishedDate;
+  String? description;
   List<IndustryIdentifiersModel>? industryIdentifiers;
   ReadingModesModel readingModes;
   int? pageCount;
@@ -28,7 +30,9 @@ class VolumeInfoModel {
   VolumeInfoModel(
       this.title,
       this.authors,
+      this.publisher,
       this.publishedDate,
+      this.description,
       this.industryIdentifiers,
       this.readingModes,
       this.pageCount,
