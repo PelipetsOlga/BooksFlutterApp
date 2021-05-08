@@ -2,6 +2,7 @@ import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/ui/common/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Widget getImage(ItemsModel item, BuildContext context, double size) {
   final thumbnailUrl = item.volumeInfo?.imageLinks?.thumbnail;
@@ -139,4 +140,29 @@ List<Widget> getDescription(ItemsModel item, BuildContext context) {
     ];
   else
     return [];
+}
+
+List<Widget> getReaderLink(ItemsModel item, BuildContext context) {
+  final link = item.accessInfo.webReaderLink;
+  TextStyle style = Theme.of(context)
+      .textTheme
+      .bodyText2!
+      .copyWith(fontStyle: FontStyle.italic)
+      .copyWith(color: AppColors.blue);
+
+  if (link.isNotEmpty)
+    return [
+      TextButton(
+          onPressed: () => _launchURL(link),
+          child: Text("Read more", style: style, textAlign: TextAlign.start)),
+      SizedBox(height: 16)
+    ];
+  else
+    return [];
+}
+
+void _launchURL(String _url) async {
+  if (await canLaunch(_url)) {
+    await launch(_url);
+  }
 }

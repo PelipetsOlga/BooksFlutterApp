@@ -38,6 +38,7 @@ dependencies:
   modal_bottom_sheet: ^2.0.0
   anim_search_bar: ^2.0.1
   share: ^2.0.1
+  url_launcher: ^6.0.3
 
 dev_dependencies:
   flutter_test:

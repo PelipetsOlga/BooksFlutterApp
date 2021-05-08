@@ -38,6 +38,7 @@ class BookPage extends StatelessWidget {
                 ...getCategories(item, context),
                 ...getPublisher(item, context),
                 ...getDescription(item, context),
+                ...getReaderLink(item, context),
               ],
             ),
           ),
