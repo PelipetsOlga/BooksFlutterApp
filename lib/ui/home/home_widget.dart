@@ -44,23 +44,7 @@ class HomeScreenState extends State<HomeScreen> {
       create: (context) => viewModel,
       child: SafeArea(
         child: Scaffold(
-          appBar: AppBar(
-            title: Text("Books"),
-            actions: <Widget>[
-              Padding(
-                  padding: EdgeInsets.only(right: 20.0),
-                  child: GestureDetector(
-                    onTap: () => showMaterialModalBottomSheet(
-                      expand: false,
-                      context: context,
-                      elevation: 16,
-                      backgroundColor: Colors.transparent,
-                      builder: (context) => ModalFit(viewModel.filterViewModel),
-                    ),
-                    child: Icon(Icons.more_vert),
-                  )),
-            ],
-          ),
+          appBar: _buildAppBar(context),
           body: Container(
             color: AppColors.pageBackground,
             child: ValueListenableBuilder<List<ItemsModel>>(
@@ -79,6 +63,26 @@ class HomeScreenState extends State<HomeScreen> {
         ),
       ),
     );
+  }
+
+  AppBar _buildAppBar(BuildContext context) {
+    return AppBar(
+          title: Text("Books"),
+          actions: <Widget>[
+            Padding(
+                padding: EdgeInsets.only(right: 20.0),
+                child: GestureDetector(
+                  onTap: () => showMaterialModalBottomSheet(
+                    expand: false,
+                    context: context,
+                    elevation: 16,
+                    backgroundColor: Colors.transparent,
+                    builder: (context) => ModalFit(viewModel.filterViewModel),
+                  ),
+                  child: Icon(Icons.more_vert),
+                )),
+          ],
+        );
   }
 
   Center _buildLoadingView() => Center(child: CircularProgressIndicator());

@@ -1,7 +1,9 @@
+import 'dart:io';
+
 import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/ui/common/book_decorator.dart';
-import 'package:books_app/ui/common/colors.dart';
 import 'package:flutter/material.dart';
+import 'package:share/share.dart';
 
 class BookPageArgs {
   ItemsModel data;
@@ -17,9 +19,8 @@ class BookPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final item = args.data;
-    final title = item.volumeInfo?.title;
     return Scaffold(
-      appBar: AppBar(),
+      appBar: _buildAppBar(),
       body: SingleChildScrollView(
         child: Container(
           width: double.infinity,
@@ -43,5 +44,23 @@ class BookPage extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  AppBar _buildAppBar() {
+    var link = args.data.volumeInfo?.canonicalVolumeLink;
+    if (link != null && link.isNotEmpty && Platform.isAndroid)
+      return AppBar(actions: <Widget>[
+        Padding(
+            padding: EdgeInsets.only(right: 20.0),
+            child: GestureDetector(
+              onTap: () {
+                Share.share('Google book is here $link',
+                    subject: 'Take a look!');
+              },
+              child: Icon(Icons.share),
+            )),
+      ]);
+    else
+      return AppBar();
   }
 }
