@@ -4,7 +4,6 @@ import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:books_app/navigation/first/router_home.dart';
 import 'package:books_app/ui/book/book_page.dart';
-import 'package:books_app/ui/common/colors.dart';
 import 'package:books_app/ui/common/listtile/listtile.dart';
 import 'package:books_app/ui/home/home_view_model.dart';
 import 'package:books_app/ui/common/filter/modal_fit.dart';
@@ -46,7 +45,6 @@ class HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           appBar: _buildAppBar(context),
           body: Container(
-            color: AppColors.pageBackground,
             child: ValueListenableBuilder<List<ItemsModel>>(
               valueListenable: viewModel,
               builder: (BuildContext context, List<ItemsModel> items,

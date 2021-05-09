@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'tab_item.dart';
 
 class BottomNavigation extends StatelessWidget {
-
   final TabItem currentTab;
   final ValueChanged<TabItem> onSelectTab;
 
@@ -12,10 +11,11 @@ class BottomNavigation extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
+      currentIndex: currentTab.index,
       type: BottomNavigationBarType.fixed,
       items: [
-        _buildItem(TabItem.home),
-        _buildItem(TabItem.search),
+        _buildItem(TabItem.home, context),
+        _buildItem(TabItem.search, context),
       ],
       onTap: (index) => onSelectTab(
         TabItem.values[index],
@@ -23,17 +23,12 @@ class BottomNavigation extends StatelessWidget {
     );
   }
 
-  BottomNavigationBarItem _buildItem(TabItem tabItem) {
+  BottomNavigationBarItem _buildItem(TabItem tabItem, BuildContext context) {
     return BottomNavigationBarItem(
-      icon: Icon(
-        Icons.layers,
-        color: _colorTabMatching(tabItem),
-      ),
+      icon: tabItem == TabItem.home
+          ? Icon(Icons.home)
+          : Icon(Icons.search),
       label: tabName[tabItem],
     );
-  }
-
-  Color _colorTabMatching(TabItem item) {
-    return currentTab == item ? activeTabColor[item]!: Colors.grey;
   }
 }

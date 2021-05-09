@@ -1,6 +1,7 @@
 import 'package:books_app/navigation/second/tab_root_search_page.dart';
-import 'package:books_app/ui/common/constants.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'bottom_navigation.dart';
 import 'first/tab_root_home_page.dart';
@@ -9,9 +10,20 @@ import 'tab_item.dart';
 class BooksApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
+    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle(
+      statusBarColor: Colors.black, //or set color with: Color(0xFF0000FF)
+    ));
     return MaterialApp(
       title: 'Books',
-      theme: UIConstants.materialTheme,
+      theme: FlexColorScheme.light(
+        scheme: FlexScheme.deepBlue,
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      ).toTheme,
+      darkTheme: FlexColorScheme.dark(
+        scheme: FlexScheme.deepBlue,
+        visualDensity: FlexColorScheme.comfortablePlatformDensity,
+      ).toTheme,
+      themeMode: ThemeMode.system,
       debugShowCheckedModeBanner: false,
       home: App(),
     );

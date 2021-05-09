@@ -4,7 +4,6 @@ import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:books_app/navigation/second/router_search.dart';
 import 'package:books_app/ui/book/book_page.dart';
-import 'package:books_app/ui/common/colors.dart';
 import 'package:books_app/ui/common/filter/modal_fit.dart';
 import 'package:books_app/ui/common/listtile/listtile.dart';
 import 'package:books_app/ui/search/search_view_model.dart';
@@ -57,7 +56,6 @@ class SearchScreenState extends State<SearchScreen>
         child: Scaffold(
           appBar: _getAppBar(context),
           body: Container(
-            color: AppColors.pageBackground,
             child: ValueListenableBuilder<SearchResults>(
               valueListenable: viewModel,
               builder: (BuildContext context, SearchResults searchResults,
@@ -127,7 +125,7 @@ class SearchScreenState extends State<SearchScreen>
             border: Border(
               bottom: BorderSide(
                 width: 2,
-                color: Colors.orange,
+                color: Theme.of(context).accentColor,
               ),
             ),
           ),

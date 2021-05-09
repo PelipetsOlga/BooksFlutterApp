@@ -1,5 +1,4 @@
 import 'package:books_app/domain/models/items.dart';
-import 'package:books_app/ui/common/colors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_rating_bar/flutter_rating_bar.dart';
 import 'package:url_launcher/url_launcher.dart';
@@ -45,11 +44,7 @@ List<Widget> getAuthors(ItemsModel item, BuildContext context) {
     return [];
   else
     return [
-      Text(authors.join(", "),
-          style: Theme.of(context)
-              .textTheme
-              .headline6
-              ?.copyWith(color: AppColors.gray3)),
+      Text(authors.join(", "), style: Theme.of(context).textTheme.headline6),
       SizedBox(height: 16),
     ];
 }
@@ -130,8 +125,7 @@ List<Widget> getDescription(ItemsModel item, BuildContext context) {
   TextStyle style = Theme.of(context)
       .textTheme
       .bodyText2!
-      .copyWith(fontStyle: FontStyle.italic)
-      .copyWith(color: AppColors.gray3);
+      .copyWith(fontStyle: FontStyle.italic);
 
   if (description != null)
     return [
@@ -147,8 +141,7 @@ List<Widget> getReaderLink(ItemsModel item, BuildContext context) {
   TextStyle style = Theme.of(context)
       .textTheme
       .bodyText2!
-      .copyWith(fontStyle: FontStyle.italic)
-      .copyWith(color: AppColors.blue);
+      .copyWith(fontStyle: FontStyle.italic);
 
   if (link.isNotEmpty)
     return [
