@@ -11,7 +11,6 @@ import 'package:books_app/ui/search/search_view_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:modal_bottom_sheet/modal_bottom_sheet.dart';
-import 'package:anim_search_bar/anim_search_bar.dart';
 
 import '../../injection.dart';
 
@@ -102,17 +101,17 @@ class SearchScreenState extends State<SearchScreen>
 
   Padding _getSearchBar() {
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 8.0),
-      child: AnimSearchBar(
-        width: 800,
-        autoFocus: true,
-        color: Colors.lightBlueAccent,
-        textController: textController,
-        onSuffixTap: () {
-          setState(() {
-            textController.clear();
-          });
-        },
+      padding: const EdgeInsets.all(16),
+      child: TextField(
+        decoration: InputDecoration(
+          border: OutlineInputBorder(),
+          hintText: 'Enter a search keyword',
+          suffixIcon: IconButton(
+            onPressed: () => textController.clear(),
+            icon: Icon(Icons.clear),
+          ),
+        ),
+        controller: textController,
       ),
     );
   }

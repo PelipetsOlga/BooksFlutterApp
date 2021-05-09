@@ -1,4 +1,3 @@
-import 'package:books_app/domain/models/items.dart';
 import 'package:books_app/ui/book/book_page.dart';
 import 'package:books_app/ui/home/home_widget.dart';
 import 'package:flutter/material.dart';
