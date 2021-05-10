@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:books_app/domain/models/items.dart';
+import 'package:books_app/domain/models/item_like.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:books_app/navigation/first/router_home.dart';
 import 'package:books_app/ui/book/book_page.dart';
@@ -45,9 +45,9 @@ class HomeScreenState extends State<HomeScreen> {
         child: Scaffold(
           appBar: _buildAppBar(context),
           body: Container(
-            child: ValueListenableBuilder<List<ItemsModel>>(
+            child: ValueListenableBuilder<List<ItemLikeModel>>(
               valueListenable: viewModel,
-              builder: (BuildContext context, List<ItemsModel> items,
+              builder: (BuildContext context, List<ItemLikeModel> items,
                   Widget? child) {
                 if (viewModel.isLoading() && items.isEmpty)
                   return _buildLoadingView();
@@ -88,7 +88,7 @@ class HomeScreenState extends State<HomeScreen> {
   Text _buildEmptyView() => Text('No data');
 
   NotificationListener<ScrollNotification> _buildListView(
-      List<ItemsModel> items) {
+      List<ItemLikeModel> items) {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification scrollInfo) {
         if (scrollInfo is ScrollEndNotification &&
@@ -111,7 +111,7 @@ class HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void onItemClick(ItemsModel item) {
+  void onItemClick(ItemLikeModel item) {
     FocusScope.of(context).focusedChild?.unfocus();
     Navigator.of(context)
         .pushNamed(RouterHome.home_book, arguments: BookPageArgs(item));

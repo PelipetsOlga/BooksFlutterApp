@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:books_app/domain/models/items.dart';
+import 'package:books_app/domain/models/item_like.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:books_app/ui/common/filter/common_books_list_view_model.dart';
 import 'package:books_app/ui/common/filter/filter_view_model.dart';
@@ -14,8 +14,8 @@ class SearchViewModel extends ValueNotifier<SearchResults>
   int pageNumberByTitle = 0;
   int pageNumberByAuthor = 0;
   int _batchesOf = 20;
-  final List<ItemsModel> _itemsByTitle = [];
-  final List<ItemsModel> _itemsByAuthor = [];
+  final List<ItemLikeModel> _itemsByTitle = [];
+  final List<ItemLikeModel> _itemsByAuthor = [];
   late FilterViewModel filterViewModel;
   late SearchResults searchResults;
   String _searchKey = "";
@@ -34,12 +34,12 @@ class SearchViewModel extends ValueNotifier<SearchResults>
     reload();
   }
 
-  void addItemsByTitle(List<ItemsModel> list) {
+  void addItemsByTitle(List<ItemLikeModel> list) {
     _itemsByTitle.addAll(list);
     notifyListeners();
   }
 
-  void addItemsByAuthor(List<ItemsModel> list) {
+  void addItemsByAuthor(List<ItemLikeModel> list) {
     _itemsByAuthor.addAll(list);
     notifyListeners();
   }
@@ -66,7 +66,7 @@ class SearchViewModel extends ValueNotifier<SearchResults>
         sortedByType: filterViewModel.getSortedType(),
         printType: filterViewModel.getFilterByPrintType());
     pageNumberByTitle++;
-    addItemsByTitle(result.items);
+    addItemsByTitle(result);
   }
 
   Future<void> getMoreByAuthor() async {
@@ -76,14 +76,14 @@ class SearchViewModel extends ValueNotifier<SearchResults>
         sortedByType: filterViewModel.getSortedType(),
         printType: filterViewModel.getFilterByPrintType());
     pageNumberByAuthor++;
-    addItemsByAuthor(result.items);
+    addItemsByAuthor(result);
   }
 }
 
 class SearchResults {
-  List<ItemsModel> itemsByTitle;
+  List<ItemLikeModel> itemsByTitle;
 
-  List<ItemsModel> itemsByAuthor;
+  List<ItemLikeModel> itemsByAuthor;
 
   SearchResults(this.itemsByTitle, this.itemsByAuthor);
 

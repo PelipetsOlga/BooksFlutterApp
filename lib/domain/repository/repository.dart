@@ -1,13 +1,13 @@
-import 'package:books_app/domain/models/volumes.dart';
+import 'package:books_app/domain/models/item_like.dart';
 
 abstract class BooksRepository {
-  Future<VolumesModel> getAllBooks(
+  Future<List<ItemLikeModel>> getAllBooks(
       {int startIndex,
       int maxResults,
       SortedByType sortedByType,
       FilterByPrintType printType});
 
-  Future<VolumesModel> search(String keyWord, SearchIn whereSearch,
+  Future<List<ItemLikeModel>> search(String keyWord, SearchIn whereSearch,
       {int startIndex,
       int maxResults,
       SortedByType sortedByType,

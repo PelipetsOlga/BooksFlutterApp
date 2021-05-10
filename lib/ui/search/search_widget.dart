@@ -1,6 +1,6 @@
 import 'dart:developer';
 
-import 'package:books_app/domain/models/items.dart';
+import 'package:books_app/domain/models/item_like.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:books_app/navigation/second/router_search.dart';
 import 'package:books_app/ui/book/book_page.dart';
@@ -174,7 +174,7 @@ class SearchScreenState extends State<SearchScreen>
   }
 
   NotificationListener<ScrollNotification> _buildListViewByTitle(
-      List<ItemsModel> items) {
+      List<ItemLikeModel> items) {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification scrollInfo) {
         if (scrollInfo is ScrollEndNotification &&
@@ -198,7 +198,7 @@ class SearchScreenState extends State<SearchScreen>
   }
 
   NotificationListener<ScrollNotification> _buildListViewByAuthor(
-      List<ItemsModel> items) {
+      List<ItemLikeModel> items) {
     return NotificationListener<ScrollNotification>(
       onNotification: (ScrollNotification scrollInfo) {
         if (scrollInfo is ScrollEndNotification &&
@@ -221,7 +221,7 @@ class SearchScreenState extends State<SearchScreen>
     );
   }
 
-  void onItemClick(ItemsModel item) {
+  void onItemClick(ItemLikeModel item) {
     FocusScope.of(context).focusedChild?.unfocus();
     Navigator.of(context)
         .pushNamed(RouterSearch.search_book, arguments: BookPageArgs(item));

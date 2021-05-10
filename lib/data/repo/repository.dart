@@ -1,7 +1,7 @@
 import 'package:books_app/data/api/api.dart';
 import 'package:books_app/data/api/constants.dart';
 import 'package:books_app/data/api/search_api.dart';
-import 'package:books_app/domain/models/volumes.dart';
+import 'package:books_app/domain/models/item_like.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:injectable/injectable.dart';
 import 'package:dio/dio.dart';
@@ -21,35 +21,42 @@ class BooksRepositoryImpl implements BooksRepository {
   }
 
   @override
-  Future<VolumesModel> getAllBooks({int startIndex = 0,
-    int maxResults = 20,
-    SortedByType sortedByType = SortedByType.relevance,
-    FilterByPrintType printType = FilterByPrintType.all}) async {
+  Future<List<ItemLikeModel>> getAllBooks(
+      {int startIndex = 0,
+      int maxResults = 20,
+      SortedByType sortedByType = SortedByType.relevance,
+      FilterByPrintType printType = FilterByPrintType.all}) async {
     String printTypeValue = filter_all;
     if (printType == FilterByPrintType.books)
       printTypeValue = filter_books;
     else if (printType == FilterByPrintType.magazines)
       printTypeValue = filter_magazines;
 
-    final apiResult = await booksApi.getAllVolumes(
-        startIndex: startIndex,
-        maxResults: maxResults,
-        orderedByParam: sortedByType == SortedByType.relevance
-            ? sort_by_relevance
-            : sort_by_newest,
-        printType: printTypeValue).then((result) {
+    final apiResult = await booksApi
+        .getAllVolumes(
+            startIndex: startIndex,
+            maxResults: maxResults,
+            orderedByParam: sortedByType == SortedByType.relevance
+                ? sort_by_relevance
+                : sort_by_newest,
+            printType: printTypeValue)
+        .then((result) {
       logger.d(result);
       return result;
     });
-    return apiResult.toDomain();
+    return apiResult
+        .toDomain()
+        .items
+        .map((e) => ItemLikeModel(e, false))
+        .toList();
   }
 
   @override
-  Future<VolumesModel> search(String keyWord, SearchIn whereSearch,
+  Future<List<ItemLikeModel>> search(String keyWord, SearchIn whereSearch,
       {int startIndex = 0,
-        int maxResults = 20,
-        SortedByType sortedByType = SortedByType.relevance,
-        FilterByPrintType printType = FilterByPrintType.all}) async {
+      int maxResults = 20,
+      SortedByType sortedByType = SortedByType.relevance,
+      FilterByPrintType printType = FilterByPrintType.all}) async {
     String printTypeValue = filter_all;
     if (printType == FilterByPrintType.books)
       printTypeValue = filter_books;
@@ -64,18 +71,23 @@ class BooksRepositoryImpl implements BooksRepository {
       key = '$inauthor:${words.join("+")}';
     }
 
-    final apiResult = await searchApi.search(
-        key,
-        startIndex: startIndex,
-        maxResults: maxResults,
-        orderedByParam: sortedByType == SortedByType.relevance
-            ? sort_by_relevance
-            : sort_by_newest,
-        printType: printTypeValue).then((result) {
+    final apiResult = await searchApi
+        .search(key,
+            startIndex: startIndex,
+            maxResults: maxResults,
+            orderedByParam: sortedByType == SortedByType.relevance
+                ? sort_by_relevance
+                : sort_by_newest,
+            printType: printTypeValue)
+        .then((result) {
       logger.d(result);
       return result;
     });
 
-    return apiResult.toDomain();
+    return apiResult
+        .toDomain()
+        .items
+        .map((e) => ItemLikeModel(e, false))
+        .toList();
   }
 }

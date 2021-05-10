@@ -1,19 +1,19 @@
 import 'dart:developer';
 
-import 'package:books_app/domain/models/items.dart';
+import 'package:books_app/domain/models/item_like.dart';
 import 'package:books_app/domain/repository/repository.dart';
 import 'package:books_app/ui/common/filter/common_books_list_view_model.dart';
 import 'package:books_app/ui/common/filter/filter_view_model.dart';
 import 'package:flutter/material.dart';
 
-class HomeViewModel extends ValueNotifier<List<ItemsModel>>
+class HomeViewModel extends ValueNotifier<List<ItemLikeModel>>
     implements CommonBooksListViewModel {
   BooksRepository repository;
   int pageNumber = 0;
   bool _hasMore = true;
   int _batchesOf = 20;
   bool _loading = false;
-  final List<ItemsModel> _items = [];
+  final List<ItemLikeModel> _items = [];
   late FilterViewModel filterViewModel;
 
   HomeViewModel(this.repository) : super([]) {
@@ -21,9 +21,9 @@ class HomeViewModel extends ValueNotifier<List<ItemsModel>>
   }
 
   @override
-  List<ItemsModel> get value => _items;
+  List<ItemLikeModel> get value => _items;
 
-  void addItems(List<ItemsModel> list) {
+  void addItems(List<ItemLikeModel> list) {
     _items.addAll(list);
     notifyListeners();
   }
@@ -55,7 +55,7 @@ class HomeViewModel extends ValueNotifier<List<ItemsModel>>
           printType: filterViewModel.getFilterByPrintType());
       _setIsLoading(false);
       pageNumber++;
-      addItems(result.items);
+      addItems(result);
     }
   }
 }
