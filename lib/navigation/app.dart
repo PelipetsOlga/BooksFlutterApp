@@ -1,4 +1,5 @@
 import 'package:books_app/navigation/second/tab_root_search_page.dart';
+import 'package:books_app/navigation/third/tab_root_favourites_page.dart';
 import 'package:flex_color_scheme/flex_color_scheme.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -40,6 +41,7 @@ class AppState extends State<App> {
   final _navigatorKeys = {
     TabItem.home: GlobalKey<NavigatorState>(),
     TabItem.search: GlobalKey<NavigatorState>(),
+    TabItem.favorites: GlobalKey<NavigatorState>(),
   };
 
   void _selectTab(TabItem tabItem) {
@@ -74,6 +76,7 @@ class AppState extends State<App> {
         body: Stack(children: <Widget>[
           _buildFirstNavigator(TabItem.home),
           _buildSecondNavigator(TabItem.search),
+          _buildThirdNavigator(TabItem.favorites),
         ]),
         bottomNavigationBar: BottomNavigation(
           currentTab: _currentTab,
@@ -97,6 +100,16 @@ class AppState extends State<App> {
     return Offstage(
       offstage: _currentTab != tabItem,
       child: TabRootSearchPage(
+        navigatorKey: _navigatorKeys[tabItem]!,
+        tabItem: tabItem,
+      ),
+    );
+  }
+
+  Widget _buildThirdNavigator(TabItem tabItem) {
+    return Offstage(
+      offstage: _currentTab != tabItem,
+      child: TabRootFavouritesPage(
         navigatorKey: _navigatorKeys[tabItem]!,
         tabItem: tabItem,
       ),

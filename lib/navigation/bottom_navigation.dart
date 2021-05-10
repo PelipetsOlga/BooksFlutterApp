@@ -16,6 +16,7 @@ class BottomNavigation extends StatelessWidget {
       items: [
         _buildItem(TabItem.home, context),
         _buildItem(TabItem.search, context),
+        _buildItem(TabItem.favorites, context),
       ],
       onTap: (index) => onSelectTab(
         TabItem.values[index],
@@ -27,7 +28,9 @@ class BottomNavigation extends StatelessWidget {
     return BottomNavigationBarItem(
       icon: tabItem == TabItem.home
           ? Icon(Icons.home)
-          : Icon(Icons.search),
+          : tabItem == TabItem.search
+              ? Icon(Icons.search)
+              : Icon(Icons.favorite),
       label: tabName[tabItem],
     );
   }
